@@ -1,3 +1,7 @@
 lib
 bin
 .vscode
+.idea
+*.iml
+*.xml
+
