@@ -1,9 +1,7 @@
 package com.craftinginterpreters.lox;
 
-import java.beans.Expression;
-
 /**
- * 功能:
+ * 功能: interpreter
  * 作者:
  * 日期:2024/09/19 15:01
  */
