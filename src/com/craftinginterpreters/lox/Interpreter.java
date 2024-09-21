@@ -1,11 +1,13 @@
 package com.craftinginterpreters.lox;
 
+import java.util.List;
+
 /**
  * 功能: interpreter
  * 作者:
  * 日期:2024/09/19 15:01
  */
-public class Interpreter implements Expr.Visitor<Object> {
+public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitLiteralExpr(Expr.Literal expr) {
@@ -20,6 +22,24 @@ public class Interpreter implements Expr.Visitor<Object> {
     private Object evaluate(Expr expr) {
         return expr.accept(this);
     }
+
+    private void execute(Stmt stmt) {
+        stmt.accept(this);
+    }
+
+    @Override
+    public Void visitExpressionStmt(Stmt.Expression stmt) {
+        evaluate(stmt.expression);
+        return null;
+    }
+
+    @Override
+    public Void visitPrintStmt(Stmt.Print stmt) {
+        Object value = evaluate(stmt.expression);
+        System.out.println(stringify(value));
+        return null;
+    }
+
 
     @Override
     public Object visitBinaryExpr(Expr.Binary expr) {
@@ -116,10 +136,11 @@ public class Interpreter implements Expr.Visitor<Object> {
         return object.toString();
     }
 
-    void interpret(Expr expression) {
+    void interpret(List<Stmt> statements) {
         try {
-            Object value = evaluate(expression);
-            System.out.println(stringify(value));
+            for(Stmt statement : statements){
+                execute(statement);
+            }
         } catch (RuntimeError error) {
             Lox.runtimeError(error);
         }
