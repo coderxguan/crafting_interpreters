@@ -1,9 +1,9 @@
 
-var a = 10;
-var b = 12;
-if(a < b)
-print "a < b";
+var a = 0;
+var temp;
 
-else
-print "\n";
-print "yes";
+for(var b = 1; a < 1000; b = temp + b){
+    print a;
+    temp =a ;
+    a =b;
+}
